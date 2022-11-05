@@ -1,0 +1,829 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="AbilityData.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="LoginState.cpp" />
+    <ClCompile Include="MagicData.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapLight.cpp" />
+    <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="SelectCharacterState.cpp" />
+    <ClCompile Include="SpecialAttackData.cpp" />
+    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TileProperties.cpp" />
+    <ClCompile Include="TileSet.cpp" />
+    <ClCompile Include="Zone.cpp" />
+    <ClCompile Include="Network\GamePacket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\GameSocket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\SessionPacket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\SessionSocket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\CharacterFocus.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ChatHistoryWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ChatInput.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ChatWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\EventMessageWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\EventSelectionWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Elements\FormattedListboxTextItem.cpp">
+      <Filter>GUI\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GuildApplyWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GuildJoinWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GuildMenu.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GuildWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\HUD.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\InputBoxWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\InventoryWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ItemFocus.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ItemTooltip.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\LoginWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MagicAbilityWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MagicAuraWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MagicBlackWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MagicBlueWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MagicWhiteWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MapWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MessageBoxWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Moral.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\RepairWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\SelectCharacterWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ShopWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\StashWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\StatusWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Precompiled.cpp" />
+    <ClCompile Include="Framework\GameEngine.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\GUI.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Assets\AsyncFileLoad.cpp">
+      <Filter>Framework\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Assets\ResourceCache.cpp">
+      <Filter>Framework\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Graphics\Animation.cpp">
+      <Filter>Framework\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Graphics\SpriteBatch.cpp">
+      <Filter>Framework\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Graphics\TextureAtlas.cpp">
+      <Filter>Framework\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Graphics\TextureRegion.cpp">
+      <Filter>Framework\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\AnimationSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\CameraSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\LightRenderSystem.cpp">
+      <Filter>Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\RenderSystem.cpp">
+      <Filter>Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\TileMapRenderSystem.cpp">
+      <Filter>Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Spatials\ItemSpatial.cpp">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Spatials\CharacterSpatial.cpp">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObjectLoader.cpp" />
+    <ClCompile Include="DebugState.cpp" />
+    <ClCompile Include="Framework\Utils\RandomNumber.cpp">
+      <Filter>Framework\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\AttributeComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\PositionComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Utils\PositionConvert.cpp">
+      <Filter>Framework\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ItemAttributeComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\InventoryComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\FocusSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\FocusComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\AreaComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="DataTables\ItemTable.cpp">
+      <Filter>DataTables</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\MovementComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\MovementSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFind.cpp" />
+    <ClCompile Include="Components\ChatComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\ChatSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\CharacterStateSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Spatials\BloodSpatial.cpp">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\BloodComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\BloodSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\DeathSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\DeadComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ExpiresComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\ExpirationSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ArrowComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Spatials\ArrowSpatial.cpp">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\ArrowSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="DataTables\MagicTable.cpp">
+      <Filter>DataTables</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\MagicComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\MagicSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\EffectComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Spatials\EffectSpatial.cpp">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Elements\CustomItemListbox.cpp">
+      <Filter>GUI\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GuildStashWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GuildInfoWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\PosShopWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ItemTransformWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\QuestWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ExchangeWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Common\Item.cpp">
+      <Filter>GUI\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ExchangeTraderWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GuildEmblem.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\HUDDead.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\PrivateMessage.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MakeItemWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\AbilityWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GuildEmblemChangeWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\MouseCursorSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\CharacterRender.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\EffectSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\FlyingEffectComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\FlyingEffectSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Graphics\SpriteBatch2.cpp">
+      <Filter>Framework\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\Component.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\ComponentType.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\ComponentTypeManager.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\DelayedEntityProcessingSystem.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\DelayedEntitySystem.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\Entity.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\EntityManager.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\EntityProcessingSystem.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\EntitySystem.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\GroupManager.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\SystemBitManager.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\SystemManager.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\TagManager.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Artemis\World.cpp">
+      <Filter>Artemis</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AbilityData.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="LoginState.h" />
+    <ClInclude Include="MagicData.h" />
+    <ClInclude Include="MapLight.h" />
+    <ClInclude Include="PlayState.h" />
+    <ClInclude Include="SelectCharacterState.h" />
+    <ClInclude Include="SpecialAttackData.h" />
+    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TileProperties.h" />
+    <ClInclude Include="TileSet.h" />
+    <ClInclude Include="Zone.h" />
+    <ClInclude Include="Network\GamePacket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\GameProtocol.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\GameSocket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\SessionPacket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\SessionProtocol.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\SessionSocket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\CharacterFocus.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ChatHistoryWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ChatInput.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ChatWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\EventMessageWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Elements\FormattedListboxTextItem.h">
+      <Filter>GUI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\EventSelectionWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GuildApplyWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GuildJoinWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GuildMenu.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GuildWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\HUD.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\InputBoxWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\InventoryWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ItemFocus.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ItemTooltip.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\LoginWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MagicAbilityWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MagicAuraWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MagicBlackWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MagicBlueWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MagicWhiteWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MapWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MessageBoxWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Moral.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\RepairWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\SelectCharacterWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ShopWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\StashWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\StatusWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Precompiled.h" />
+    <ClInclude Include="Framework\GameEngine.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\GUI.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\IGameState.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Assets\AnimationResource.h">
+      <Filter>Framework\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Assets\AsyncFileLoad.h">
+      <Filter>Framework\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Assets\ResourceCache.h">
+      <Filter>Framework\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Assets\ResourceLoader.h">
+      <Filter>Framework\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Assets\TextureAtlasResource.h">
+      <Filter>Framework\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Assets\TextureResource.h">
+      <Filter>Framework\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Graphics\Animation.h">
+      <Filter>Framework\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Graphics\Light.h">
+      <Filter>Framework\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Graphics\SpriteBatch.h">
+      <Filter>Framework\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Graphics\TextureAtlas.h">
+      <Filter>Framework\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Graphics\TextureRegion.h">
+      <Filter>Framework\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\AnimationSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\CameraSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\LightRenderSystem.h">
+      <Filter>Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\RenderSystem.h">
+      <Filter>Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\TileMapRenderSystem.h">
+      <Filter>Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Spatials\Spatial.h">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\AnimationComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\AttributeComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\EquipmentComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ItemAttributeComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PositionComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\SpatialComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Spatials\ItemSpatial.h">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Spatials\CharacterSpatial.h">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObjectLoader.h" />
+    <ClInclude Include="DebugState.h" />
+    <ClInclude Include="EntityFactory.h" />
+    <ClInclude Include="Framework\Utils\RandomNumber.h">
+      <Filter>Framework\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\InventoryComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Utils\PositionConvert.h">
+      <Filter>Framework\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\FocusSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\FocusComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\AreaComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DataTables\ItemTable.h">
+      <Filter>DataTables</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\MovementSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFind.h" />
+    <ClInclude Include="Components\ChatComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\ChatSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\CharacterStateSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Spatials\BloodSpatial.h">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\BloodComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\BloodSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\DeadComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\DeathSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ExpiresComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\ExpirationSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Assets\TextureResourceLoader.h">
+      <Filter>Framework\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Assets\ThreadedResourceLoader.h">
+      <Filter>Framework\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Assets\ThreadedResourceCache.h">
+      <Filter>Framework\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ArrowComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Spatials\ArrowSpatial.h">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\ArrowSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="DataTables\MagicTable.h">
+      <Filter>DataTables</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MagicComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\MagicSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\EffectComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Spatials\EffectSpatial.h">
+      <Filter>Systems\Rendering\Spatials</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Elements\CustomItemListbox.h">
+      <Filter>GUI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GuildStashWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GuildInfoWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\PosShopWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ItemTransformWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\QuestWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ExchangeWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Common\Item.h">
+      <Filter>GUI\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ExchangeTraderWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GuildEmblem.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\HUDDead.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\PrivateMessage.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MakeItemWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\AbilityWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GuildEmblemChangeWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\MouseCursorSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Utils\Enum.h">
+      <Filter>Framework\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\CharacterRender.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\EffectSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\FlyingEffectComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\FlyingEffectSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Graphics\SpriteBatch2.h">
+      <Filter>Framework\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\BitSize.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\Component.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\ComponentMapper.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\ComponentType.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\ComponentTypeManager.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\DelayedEntityProcessingSystem.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\DelayedEntitySystem.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\Entity.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\EntityManager.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\EntityProcessingSystem.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\EntitySystem.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\GroupManager.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\ImmutableBag.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\SystemBitManager.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\SystemManager.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\TagManager.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\TypeInfoComparator.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Artemis\World.h">
+      <Filter>Artemis</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{7e56f63e-2c7e-4e69-82bd-80325f22cc2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{9c066b39-2a25-402c-bee4-d09b35a0d689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Elements">
+      <UniqueIdentifier>{974b988c-9240-4d75-aff5-6a1a7479f83f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{8661dc55-868c-4902-9f39-df8e9a991172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Assets">
+      <UniqueIdentifier>{d12dbcf7-3d6e-4c10-a828-a92070df2f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Graphics">
+      <UniqueIdentifier>{cadc3a69-833b-4c30-b066-e92c4a8fd6b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{58cd4c03-365f-437e-87a3-ab4eee757475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{97f3c2f3-dcbf-4646-b3d5-8d8e1b18d614}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Rendering">
+      <UniqueIdentifier>{c7a8772e-e248-4a87-98ff-b54c3d12b6d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Rendering\Spatials">
+      <UniqueIdentifier>{bd66bef0-688d-4692-a560-dc2d9c6e275d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Utils">
+      <UniqueIdentifier>{32a926cf-7dfc-4f91-8c2f-66ea87111eb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataTables">
+      <UniqueIdentifier>{6e7a9cb7-133c-427f-aea4-65c23811d98f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Common">
+      <UniqueIdentifier>{bf1cd408-ff95-4511-ab9c-e1addb694b5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Artemis">
+      <UniqueIdentifier>{48fc5f1f-aa42-4271-897b-6859a265c132}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
