@@ -1,0 +1,81 @@
+Sprite - A single image. Contains pointer to texture, transform, and position.
+
+MovementPath - A list containing tile positions entity will move to from current pixel postion.
+
+Velocity - For advancing sprite position. A tile movement system would use this along side MoveList.
+
+SpriteList - A component that has a list of sprites for use with entity that require multiple sprite to represent them.
+Ordering could be important, unless the order in which the sprites be drawn is the order they have been inserted.
+ - Could have a Equipment component with a SFML sprite pointer for each piece of equipment that is currently being worn.
+   If the pointer is null then ignore it. But ordering would still be important. So a list of sprite might still be better given a way
+   to specify the order and keep the list sorted by it.
+
+
+World/Zone draw order
+
+1. TIleMap
+2. Shadow
+3. Item
+4. Everything else (Objects(Static sprite / animated sprite), Characters)
+
+
+TileMap Solution 1
+===============
+
+TileMapRenderSystem
+
+TileMapLoader
+ - Load a tile map
+ - Create entity with a component that contains the loaded tile map data.
+ - Tag the entity as the tile map.
+   - TileMapRenderSystem will use the tag.
+
+TileMap Solution 2
+===============
+
+TileMapRenderSystem
+ - Constructor takes a TileMap object
+ - Use TileMap object to get tile data.
+ - Use tile data to get tile set.
+ - Use tile set to get sprite.
+ - Draw the sprite.
+ 
+TileMap
+ - Functions to load and get tile data.
+
+
+SpatialComponent
+PositionComponent
+AnimationComponent
+EquipmentComponent
+ - Replace with InventoryComponent
+   - Then use item number to lookup the files to render what character looks like with equipment etc.
+InventoryComponent
+MagicInventoryComponent
+AuraInventoryComponent
+AbilityInventoryComponent
+AttributeComponent
+ - Health, Mana, Skin, Gender, Weapon Skill, Crafting Skill, Magic Skill...
+   - Also put direction value here unless can find a better home for it.
+   - Even though NPC do not need these will put them all in same place and themn can divide them up later if its worth it.
+
+ChatComponent (Bubble chat that appears above characters head)
+ - ChatMessage and timer
+
+ArrowComponent
+ - type
+ - startPosition
+ - endPosition
+ - target
+   - entity
+ - hitOrMiss
+   - bool, true for hit, false for miss
+ - direction
+
+BloodComponent
+
+DirectionComponent (Can then move the direction variable from attributeComponent)
+ - direction
+
+DeathComponent
+ - time

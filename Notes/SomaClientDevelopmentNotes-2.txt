@@ -1,0 +1,18 @@
+Engine
+ - 2D OpenGL
+   - SFML
+     - Window
+     - Input
+     - Graphics
+     - Network
+ - CEGUI
+   - GUI
+   - OpenGL renderer
+
+
+
+Dependencies
+  - Boost
+  - SFML
+    - Anything that SFML depends on.
+

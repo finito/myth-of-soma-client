@@ -1,0 +1,203 @@
+Zone 
+- This is the full implementation
+- Contains
+  - TileMap
+  - Objects
+  - Lights
+
+TileMap
+- The layout
+  - Uses TileSets
+  - Has TileSet index, SubTileSet index and then index to sourceTiles of a SubTileSet
+  - Is a container for TileSets and TileProperties
+
+TileSet
+- Is a container for SubTileSets
+  - Width / Height of SubTileSet
+  - Source offsets (of the TileSet)
+    - These are needed for where SubTileSets are not fully represented on the map.
+      - Some tiles could be replaced with tiles of another SubTileSet. Therefore map needs to know
+        which tiles are within the SubTileSet so that it can only draw those which are on the map and not
+        the full SubTileSet image.
+- Sprite(Image(s) for TileSet)
+  - Each frame for the TileSet is the image for SubTileSet
+
+TileProperties
+- Move/No Move
+- Area Type
+  - Arena, Safezone, etc
+
+Zone
+-> TileMap (tmn)
+    -> TileSets(tsd)
+    -> TileProperties(imf)
+-> Objects (mod) - Entites
+    -> Map Objects
+        -> House separate so can control them (fade in and out)
+    -> Player
+    -> NPC
+    -> Item
+-> Lights (lsd)
+
+
+TileSetSprite
+ - 
+
+TileSetImage
+
+
+Frame -> SubRect->TileSubRect
+
+Image -> SubRect  -> SubRect
+
+TileSetImage -> TileSubSetImage -> TileImage
+
+Load the .dat for the TileSetImage
+a SubRect of the image is a frame (sub image) is the TileSubSetImage
+So to get the TileImage
+
+You take the SubRect which gives TileSubSetImage
+then add on the Tile offset which is taken from the SubTileSet -> TileOffsetList _tiles;
+Multiply the X and Y value of the TileOffset by the tile size (in this case 32) to get the
+Top Left of the TileImage then to get the complete TileImage Rect add 32 to both X and Y.
+
+
+So, when drawing the map
+
+Get the tile set of the Tile at X, Y
+Put above into TileSetNumber
+Get the Tile Set using the TileSetNumber
+Get the Tile Set Sprite from the Tile Set
+Get the sub tile set of the Tile at X, Y
+Put into SubTileSetNumber
+Set the TileSubRect of the Tile Set Frame (Sub Image)  - Making sure to keep the original SubRect intact.
+  - Get the Sub Tile Set Frame (Sub Image) from the Tile Set Sprite)
+     - Gets the current SubRect
+       - Add the SubRect to the TileSubRect
+         - Set the TileSubRect width and height to size of tile (in this case 32)
+
+
+Tile image mass conversion to PNG (BMP folder, OBM)
+- Can get the frameWidth and frameHeight of each sub tile set from the .TSD
+  - Code a quick tool that will read all TSDs and output a txt file for each containing
+    the width and height of each sub tile set.
+    - GIMP script can read above txt files while it is processing a TSD this will allow setting of
+      frameWidth and frameHeight without having to calculate it. It also means that
+      tile sets can be mass converted easily.
+      - Extra thing to look at is to have the output in the width of the original image instead of
+        defaulting to a 1024x1024 width
+        - Could include this width within the txt file generated.
+          - Means cleaner looking output images
+            - This is not necessary.
+
+
+
+OpenGL VBO (Vertex buffer object)
+
+
+BG01
+dbat
+mbg
+mbg2
+mbg3
+mbg4
+mfh
+mj
+nbg01
+nh1
+ni01
+nv3
+nvt
+rb
+rb1
+ssg
+ssw
+svs
+swsa
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\DJ3.bmp frames different: 16 instead of 17
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\DJ3.bmp frames2 different: 16 instead of 15
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\Gh01.bmp frames different: 16 instead of 18
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\Gh01.bmp frames2 different: 16 instead of 14
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\nv1.bmp frames different: 8 instead of 9
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\nv1.bmp frames2 different: 9 instead of 8
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\nvwa.bmp frames different: 43 instead of 44
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\nvwa.bmp frames2 different: 7 instead of 6
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\Sj.bmp frames different: 48 instead of 54
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\Sj.bmp frames2 different: 12 instead of 6
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\ssv.bmp frames different: 16 instead of 18
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\ssv.bmp frames2 different: 15 instead of 13
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\ssv1.bmp frames different: 8 instead of 10
+
+Myth of Soma Tile BMP to PNG Sprite Sheet-Warning: Output file=C:\Programming Pr
+ojects\Soma\TileImages\ssv1.bmp frames2 different: 6 instead of 4
+
+
+CVSOBT02
+image1 frames was 7 should be 6
+image2 frames was 13 should be 14
+
+sobj01
+image1 frames was 7 should be 5
+image2 frames was 4 should be 6
+
+pUser = m_arrDrawUser[i];
+ptRenderingPos = pUser->GetPosition();
+limit_y = ptRenderingPos.y;
+ptRenderingPos -= ptMapOffset;
+limit_y >>= 5;
+
+CChildView::MapManager.DrawMyOutObj(limit_y, org_pos, offset_pos, x_range,bMyAbove);
+
+limit_y = g_vDispPixSize.cy * 3 + ptMapOffset.y;
+limit_y >>= 5;
+CChildView::MapManager.DrawMyOutObj(limit_y, org_pos, offset_pos, x_range);
+
+
+DrawMyOutObj
+ - DrawCommonObj
+ - DrawMyOutHouse
+
+DrawMyInObj
+ - DrawCommonObj
+ - DrawMyInHouseAndInCheck
+
+
+DrawTransOutHouse
+DrawHouseIn
+DrawShadow
+DrawPartShadow
+
+
+	CMapObj*        m_pMapObj;
+	CMapObj*        m_pMapShadowObj;
+	CMapObj*		m_pMapHouseIn;
+	CMapObj*		m_pMapHouseOut;
+	CTransObj		m_TransObj;
+
+djgd wrong map object needs fixing

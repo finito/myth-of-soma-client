@@ -1,0 +1,586 @@
+TileMap Layers
+
+Object and Player/Npc Shadow layer
+
+
+
+Array of Players/Npc
+ - Sorted by Y
+
+
+Draw all objects up until Y position of first Player/Npc in sorted list.
+
+Draw Player/Npc
+
+Repeat until looped all players within draw range.
+
+Draw the rest of the objects.
+
+
+Re-work AnimatedSprite
+ - Use sf::Sprite and have a manipulator for it for key frame animation.
+   - Will be much easier to use and can be used with the SpriteBatcher without further modification.
+
+10 frames per second
+total of 15 frames
+
+
+TextureRegion::ptr Animation::getKeyFrame (float stateTime, bool looping) {
+    int frameNumber = (int)(stateTime / frameDuration);
+
+    if (!looping) {
+        frameNumber = std::min((float) keyFrames.size() - 1, (float) frameNumber);
+    } else {
+        frameNumber = frameNumber % keyFrames.size();
+    }
+    return keyFrames[frameNumber];
+}
+
+Support for multiple texture sources could be annoying -_-
+ - Each frame requires a texture pointer
+ - TextureRegion could be used as abstraction although sf::Sprite can work just as well.
+   - It holds the area and the texture it is for and animation just has the TextureRegions.
+
+
+TextureAtlas - Async Load
+ - Texture will upadate after that has been loaded async.
+
+Animation
+ - Requires TextureRegions
+   - But if TextureAtlas not loaded yet the regions will not exist.
+     - Give it a vector of regions that is reference to a vector that will be filled.
+       - When texture atlas has loaded and regions are added then animation will see the update also.
+
+SpriteComponent
+ - Sprite
+   - Needs to be set to a valid sprite but a sprite will not be available until async load has finished.
+
+
+
+TextureLoader
+
+AnimationLoader
+
+TextureAtlasLoader
+ - Loads textures so uses TextureLoader.
+
+
+Asynchronous Loading
+ - Everything needs to be a pointer or reference so that it auto updates.
+   - Can be annoying because alot of extra checks required ;/
+
+Animation
+ - AnimationData
+   - KeyFrames (Just the index into regions of a TextureAtlas) for each direction
+   - FrameDuration
+   - Can have Multiple (AnimationCount)
+
+ - Directions (Maximum of 8, objects use only 1 usually)
+ - KeyFrames
+ - FrameDuration  (frames per secound)
+ - Multiple animations
+   - Annoying -_-
+
+
+0 = top
+1 = helm or hair
+2 = boot
+3 = pad
+4 = shield
+5 = weapon
+6 = shadow
+7 = aura
+
+
+Spatials
+ - Spatial
+   - pure virtual methods to be used as interface for concrete spatials.
+ - SimpleCharacter
+   - Can be used by NPC because they do not have equipment (atleast if not making them look like a player with equipment).
+ - Character (One per character)
+   - Initialize method
+     - Call a method to retrieve textures (separate method because the textures can change if character changes appearance)
+   - Render method
+     - Draw everything that makes up the characters form/image in the correct order.
+   - GetTextures method
+   
+Rendering of Characters and Tiled Objects
+ - First Render Magic that is behind / bottom of them
+ - Find all characters that are alive
+ - Find all characters that are dead
+ - Sort all characters that are alive by the Y position
+ - Draw blood
+ - Draw dead characters
+ - Draw Items
+ - Draw alive characters and objects
+   - Draws starting from a Y position and draws all objects up to the first Y position of character
+     Then draws the character and then loops for each character.
+   - Draw the rest of the objects.
+ - Draw Arrows
+ - Draw Magic that is above / top
+ - Draw TP
+ - Draw Trace Arrow
+
+Character Draw
+ - Magic/Aura Behind/Bottom of character
+ - Character
+   - Equipment
+ - Magic/Aura Above/Top of character
+ - Draw Damage Text
+
+
+Files to remove for upgrade to using entity system and updated framework.
+ - House.cpp/h
+ - MapEntities.cpp/h
+ - MapEntity.cpp/h
+ - MapObject.cpp/h
+ - Entity.cpp/.h
+
+Rename _characterRequests to _entityRequests
+
+
+ItemTable
+ - XML
+   - Need a parser, maybe could use CEGUIs parser?
+ - For information on what texture an item has and its draw order etc.
+
+
+Item idx convert
+
+change to xml
+(....)(...)(..)(.)(.)
+<item>\n\t<picturenumber>\1</picturenumber>\n\t<armatureindex>\2</armatureindex>\n\t<equipposition>\3</equipposition>\n\t<draworder>\4</draworder>\n\t<devil>\5</devil>\n</item>
+<item picturenumber="\1" armatureindex="\2" equipposition="\3" draworder="\4" devil="\5" />
+
+remove leading zeros
+([0]?[0]?)([0-9]+)([0-9]*)
+\2\3
+
+
+A152115.png has a bug in it.
+ - Removed it in the bmp output and converted it again.
+
+EquipmentComponent
+ - Look at changing it to ArmatureComponent because currently it is being used like that
+   - But then will need to move code around so can give the ArmatureComponent the armature index.
+     - Equipment only has the pictureId so need to use the ItemTable.xml to get the correct armature index etc.
+
+
+Path Finding Taken from http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
+===========================================================================
+g(n) represents the cost of the path from the starting point to any vertex n
+
+h(n) represents the heuristic estimated cost from vertex n to the goal
+
+f(n) = g(n) + h(n).
+
+
+The lower h(n) is, the more node A* expands, making it slower.
+
+
+If h(n) is exactly equal to the cost of moving from n to the goal, then A* will
+only follow the best path and never expand anything else, making it very fast.
+
+If h(n) is sometimes greater than the cost of moving from n to the goal, then A*
+is not guaranteed to find a shortest path, but it can run faster.
+
+At the other extreme, if h(n) is very high relative to g(n), then only h(n) plays a
+role, and A* turns into Best-First-Search.
+
+
+Scale
+
+A* computes f(n) = g(n) + h(n). To add two values, those two values need to be at the same scale.
+If g(n) is measured in hours and h(n) is measured in meters, then A* is going to consider g or h too much or too little,
+and you either won’t get as good paths or you A* will run slower than it could.
+
+
+Change Tile(Cell) move property
+=======================
+Character Login (done)
+ - Set to false on cellPosition of character.
+Character Logout (done)
+ - Set to true on cellPosition of character.
+Character Move
+ - Set to false on previous cellPosition.
+ - Set to true on next cellPosition.
+Character dies
+ - Set to true on cellPosition
+Character attacks
+ - Remove all movement queue and set tiles to movable for each remaining in queue etc.
+   and false to the one left over where character has ended up at.
+
+
+BloodEntity
+=========
+ - BloodComponent
+ - PositionComponent
+ - AnimationComponent
+ - SpatialComponent
+
+
+ArrowEntity
+=========
+ - ArrowComponent
+ - PositionComponent
+ - AnimationComponent
+ - SpatialComponent
+
+Get rid of the character specific code in AnimationSystem
+==============================================
+Rename AnimationSystem to CharacterAnimationSystem?
+Add a new AnimationSystem without all the character specifics.?
+Add a direction variable to animationComponent ?
+Add a StateSystem ?
+ - Uses Attribute and Equipment components
+ - The functions SetAnimation, GetAnimationState taken from AnimationSystem will be put here.
+ - Process the system before AnimationSystem.
+ - Keep
+	if (!animationComponent_->loop && animationComponent_->animation->HasFinished())
+	{
+		attributeComponent_->SetState(StateType::Idle);
+	}
+   within animationSystem and just put a check for if attributeComponent for the entity is null or not.
+   - Could add a callback for when animation is finished to the animationComponent
+     - Can then put the code there for setting the attributeComponent state variable to Idle.
+
+
+Have AnimationSystem use a DirectionComponent
+ - The direction component can be used by various entity
+   - Currently direction is within attributeComponent but that is character entity specific.
+   - Arrow, Character, Aura, Magic, and etc.
+
+CharacterStateSystem
+
+BloodSpatial
+
+BloodSystem
+ - Just updates the keyframe
+
+
+Character can sometimes login at wrong place if server moved it when client is loading etc.
+ - This seems to be fixed 2012-07-17
+
+
+BloodEntity
+=========
+ - BloodComponent
+ - PositionComponent
+ - AnimationComponent
+ - SpatialComponent
+
+
+BloodSystem
+ - Fetch BloodEntity that belongs to another entity
+ - Update animation for blood
+   - Does something different if attack type or not.
+
+RenderSystem
+============
+BloodSpatial
+ - Loop through the bloodLayer and only render those which have stain == true
+
+When looping through characterLayer issue a request to BloodSystem to get a list of BloodEntities belonging to
+the character entity. 
+ - Use the BloodEntities list to lookup the BloodSpatial using the Blood entity id.
+
+DeathSystem
+============
+ - add / remove of entity that have DeathComponent added to them.
+
+Render System Improvements and refactoring
+=====================================
+RenderBloodStains
+
+RenderItems
+
+RenderCharacters
+ - RenderDeadCharacters
+ - RenderAliveCharactersAndObjects
+
+RenderEffects
+
+
+FIXED - Guild chat is broken. (Also party chat had the same problem)
+FIXED - All chat was being displayed as character chat string instead of only normal, shout, and zone.
+FIXED - When character is attacked health and maximum health does not update correctly
+
+FIXED - Movement sometimes bugs for other characters when moving to targets etc.
+
+FIXED - A character focus somehow managed to stay active when attacking a group of brics.
+When attacking things items on the floor are higher and therefore can be picked up when a character is on top of them.
+
+FIXED - Changing between walk and run is not right...it should be waiting for previous animation to finish or w/e.
+
+
+
+Resources
+==========
+ - Loader Thread
+   -  More than one thread? (Per resource type?)
+   - Load from file into memory then pass that to LoadFromMemory functions for resources.
+ - Priority
+   - Loading of tiles or objects that will not yet be visible could have a lower priority.
+   - Sounds which need to be played for attacks should have a higher priority.
+- Load the least amount of data possible.
+  - Would require splitting up of frames within spritesheets or smaller spritesheets.
+- Put all data within a single file as a pack.
+  - Reduces harddrive seeking.
+
+
+Image Colours
+
+man files
+=======
+lessThan256 = 895
+greaterThan256 = 65
+
+armature files (without shadow)
+=========================
+lessThan256 = 2832
+greaterThan256 = 151
+
+map tile files
+===========
+lessThan256 = 181
+greaterThan256 = 5
+
+map object files
+=============
+lessThan256 = 170
+greaterThan256 = 124
+
+magicres (blood) files
+=================
+lessThan256 = 58
+greaterThan256 = 0
+
+Totals
+=====
+lessThan256Total = 4136
+greaterThan256Total = 345
+
+
+Map tiles that do not fit within 255 colours
+===================================
+gwa
+gwa_2
+gwa_3
+ - gwa_3 can fit onto gwa_2
+wbg
+nb
+
+
+TileMap Loading takes too long
+ - Loading from archive that is compressed will help alot.
+
+HUD updates
+ - WindowUpdated takes too long because of boost::format
+   - Use static boost::format so can re-use it.
+
+Network code
+ - Packet send 0.45ms will soon add up with lots more.
+   - Can thread the network code so that sends will just push onto a queue (will be fast)
+     - Thread can then pop and send.
+
+PlayState Initialize
+ - Why does loading itemtable.xml take 1.4seconds!
+ - RenderTexture create takes 1 second.
+
+
+Asset/Resource Management
+========================
+- Loading (IO)
+  - Synchronous
+    - Cannot be loaded in background or is needed now.
+  - Asynchronous
+    - Anything that can be preloaded in the background before it is needed.
+      - The map tiles and objects.
+  - Loading partly Asynchronous and then switching to Synchronous because the asset is needed.
+    - If for any reason an asset has not finished loading when it needs to be rendered or updated.
+      Then can force it to finish loading (this however will stall the game and therefore avoid as much as possible).
+
+
+Preload and bundles
+================
+- Assets that can be preloaded or loaded in a bundle.
+  - It is highly likely that all the body character sprites will be needed along with their animations so these can be preloaded.
+    - They can however take up quite abit of memory when uncompressed.
+      - Just read in the raw data and do not load into a Texture until required.
+        - This would require a separate cache of assets that have been read from disk but not yet processed into a useable form.
+
+
+Magic.tbl convert
+=================
+Use MagicTableConvert tool to get text output
+
+Then use regular expression to turn it into XML. (DONT USE, just use the converter as it can output the xml already)
+
+([0-9]*)([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)\t([0-9]*)
+<magic id="\1" attackType="\2" method="\3" destinationType="\4" preMagic="\5" postMagic="\6" time="\7" flyMagic="\8" effectKind="\9" fireNumber="\10" endPreMagic="\11" endPostMagic="\12" continueType="\13" con
+
+
+Magic and Effects Entity
+=========================
+CreateMagic
+ - The magic entity
+ - A combination of effects.
+   - Spawns off effects
+ - Handling of MagicArrow packet.
+   - Adjust the magic component of magic entity to reflect change or run an update function which performs checks
+     to then update/create effects etc.
+- When to create?
+  - Always have it added to a character entity?
+
+CreateEffect
+ - The effect entity.
+ - The effect component.
+   - The effect filename.
+   - In front or behind parent entity.
+
+
+Magic Implementation Solution 1
+===============================
+- IGNORE Add MagicComponent to Parent Entity iif magic component not already attached to Parent Entity.
+
+
+Give Character Entity the MagicComponent
+
+Add an array to MagicComponent of the currently active magic on the character.
+ - Add methods to access the array.
+ - Use the array to check if magic added or not.
+
+MagicSystem can use the MagicComponent to lookup active magic on character.
+ - Then can process them.
+   - Do the magic effects
+     - CreateEffect entity where needed.
+   - Remove the magic from the active array if it has completed
+
+Magic Implementation Solution 2
+================================
+MagicSystem
+ - added method
+   - When a Magic entity is created it can be added to a lookup.
+ - GetMagicEntity method
+   - Use the lookup to see if a magic entity already exists and then return the magic entity or nullptr with the given magicId
+     and serverId of source entity. 
+   - Packet handling functions can use this method on the MagicSystem to then check if they need to create the magic entity or not.
+ - process method.
+   - Use the state of the MagicComponent to execute the magic.
+     - Create effect entity where needed.
+     - Remove the magic entity when it is no longer needed or completed.
+       - Will also need to remove any effect entity that have been used by the magic.
+         - Can add an ExpiresComponent to the effect entity.
+           - Will need to know how long it should live for.
+             - This could be the continue time for some magic effects or the animation length for others.
+     - Continuation magic on targets can just be kept alive.
+       - The effect entity for them can still exist and provide the visual.
+
+Packet Handling functions
+ - Use the MagicSystem to check if magic entity has been created or not.
+   - Create if it has not update it with the extra data provided in the packet if it has.
+
+MagicComponent
+ - state variables of the magic entity.
+   - Will be used by the MagicSystem to execute the magic.
+
+EffectComponent
+ - type
+   - pre
+   - post
+ - filename
+
+Effect Entity
+ - EffectComponent
+ - SpatialComponent (type="effect")
+ - PositionComponent
+ - AnimationComponent
+
+Magic Implementation Solution 3
+================================
+MagicSystem
+ - Works on MagicComponents.
+ - No need to store a lookup to entity for magic as the parent entity will already know.
+
+MagicComponent
+ - Add to Character Entity.
+   - Makes lifetime management easier.
+   - Can lookup easier.
+ - Add a list of active magic.
+ - FindActiveMagic or HasActiveMagic method.
+
+RenderSystem
+ - RenderCharacterEffect
+   - Behind or In-front
+   - Loop through the active magic list of the MagicComponent.
+
+
+
+Player PathFind
+
+Run movement goes through 2 parts of the route at a time.
+ - Only for player not for others.
+
+Walk movement goes through 1 part of the route at a time.
+
+
+When creating the path for player.
+ - Running
+   - If the next run position has been sent to the server then the path will start
+     from the next run position.
+
+When movement system is going through the movement queue.
+ - Running
+   - If the next run position has been sent.
+     - The next position for movement is set to the sent next run position.
+       Instead of getting the next position from the movement queue.
+
+
+Private Messaging GUI
+=====================
+PrivateMessageWindow
+ - One per character.
+ - Show when icon right clicked.
+   - Icon is hidden.
+   - Y Position set to the top of Icon.
+
+PrivateMessageIcon
+ - One per character.
+ - Add to a vertical layout container on hud.
+
+PrivateMessageWindow and PrivateMessageIcon need to be linked somehow.
+ - Enclose using a defaultwindow.
+   - But PrivateMessageWindow can be moved around.
+
+
+Need to fix the Private Message frame being shown over the ToggleMenuButton
+on hud when dragging it.
+
+
+Make Item GUI
+==============
+When all 4 normal slots are filled then trying to put another item does not swap it.
+ - have to take an item off before putting another on.
+
+1 Slot is reserved for gem type items.
+ - Such as Kobold Tooth and Lich Jewel.
+
+Dragging an item into an area will place it into the correct slot.
+ - Start from left to right for the 4 slots
+ - Will place into the gem slot if the item is gem type.
+
+When removing an item from slot.
+ - It does not re-order the slots the slot the item is removed from is made empty.
+ - It does not ask how many you want to remove. It removes the whole pile.
+
+Clicking the produce button with no items in the slots results in it doing nothing.
+
+Focus System
+============
+Possibly look at splitting up FocusSystem into ItemFocusSystem and CharacterFocusSystem
+ - Because they both need to do different things and it would help a lot if they was separated.
+   - Items don't need to be sorted and currently they are because they tied with Character entity.
+
+Removal of FocusComponent
+ - Could use the group manager to group all item and character entity
+   - Then can implement Focus System better and would not need to separate it etc.

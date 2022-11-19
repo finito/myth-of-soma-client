@@ -1,0 +1,110 @@
+2D
+
+GUI
+- Login
+- Character
+	- New
+	- Delete
+- HUD
+- Skills
+	- Craft Abilities
+	- Aura 
+	- Magic
+		- Blue
+		- White
+		- Black
+- Help
+- BBS
+	- List
+	- Read
+	- Write
+- Chat History
+- Trade (Exchange)
+- Guild
+	- Manage
+		- Symbol/Logo
+		- Item Storage
+	- Apply
+- Shops
+	- Item
+		- Buy/Sell
+		- Repair
+	- Hair
+	- Pos
+- Inventory
+- Mini-map
+- Options/Settings
+- Quest Journal
+- Party
+	- Information
+- Item Storage
+- NPC Chat Boxes
+- Input Boxes
+- Loading
+Tile Map (Looks Isometric)
+ - Multiple layers
+ - Change format?
+	- This might be useful because could make it compatible with a better already existing editor.
+Weather
+- Rain
+Network
+Resource Management
+
+Technology used within current client
+- MFC
+- DirectDraw 7
+- XAudio
+- Intel JPEG Lib
+
+New Client
+Maxmium texture size
+	- 1024x1024 - Should be the best to go with
+		- Need to test on old laptop / old PC
+Resolution Independence
+	- Look into having virtual resolution to 720P 
+		- Different width for aspect ratios
+			- 960x720 4:3
+			- 1152x720 16:10
+			- 1280x720 16:9
+		       - GUI needs it's native resolution changing depending on the aspect ratio
+			keep it at 4:3 so things are not stretched but still positioned correctly.
+Image format
+	- PNG
+	- Positioning of frames
+	
+Network
+	- Has to be compatible with 1P1
+		- Cannot use the SFML class sf::Packet
+			- Uses big endian
+		- Can use SFML TCP Socket
+	- TCP
+
+	
+
+AnimatedSprite Class
+- Inherit (Derive) from sf::Drawable
+	- Don't want to use sf::Sprite because animated sprite could be more than a single image.
+- Variables (Private)
+	- Frames (e.g. std::vector<Frame*> _frames
+		- Frame contains: Image reference, subRect and offset.
+	- Timer to update the animation
+		- Use sf::Clock
+	- Speed how many frames per second
+	- currentFrame
+	- totalFrames - can get from _frames.size() instead
+- Functions
+	- addFrame (Image reference, subRect, offset)
+		- Adding a frame will increase the frames that the animated sprite has got.
+		e.g. If there is currently 10 frames and they are within a 1024x1024 texture. Then another
+		image is added which has 20 frames within a 1024x1024 texture. This will then mean that the
+		animated sprite has got 30 frames. Frame 1-10 will use the first image and frame 11-30 will 
+		use the second image.
+	- setSpeed
+	- update
+		- Advances through the frames of the animation and loops.
+	
+Character Class
+ - AnimatedSprites vector
+	- One for each state and the direction of it.
+		- There are 8 directions
+		- States include Stand, Walk, Run, Attack, and, Die.

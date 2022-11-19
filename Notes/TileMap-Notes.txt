@@ -1,0 +1,197 @@
+Currently the tilemap is using a grid system. Each chunk of the grid is the same size
+and the size can be set.
+
+With this and the way grid is created
+with a 2x2 grid of 1024x1024 chunks
+
+ _____________
+|      |      |
+|  1   |   2  |
+|______|______|
+|      |      |
+|   3  |   4  |
+|______|______|
+
+Player is always at chunk number 1.
+If the player moves left outside of chunk number 1 then it will need to update the grid
+while moving to the right means the grid will not be updated until after moving outside of chunk number 2.
+
+It also means that while the player is moving to another chunk nothing can be updated until player
+is about to move outside of it because there are no available chunks to re-use.
+
+To make it so that moving in any direction will have the same amount of the map cached.
+There needs to always be 9 chunks within the grid and the player within the chunk at the center.
+
+ ____________________
+|      |      |      |
+|   1  |   2  |   3  |
+|______|______|______|
+|      |      |      |
+|  4   |   5  |   6  |
+|______|______|______|
+|      |      |      |
+|   7  |   8  |   9  |
+|______|______|______|
+
+Player will be at chunk number 5.
+
+In the case of player being at the edge of a map it might not be in center
+and no chunks will load or unload.
+
+No matter which direction the player moves in there is always a chunk that is cached.
+
+This works great apart from if the size of the screen shown to the player is > 1024x1024 as this is the
+maximum texture size which is being allowed in this client.
+
+To solve the above problem.
+It needs to be possible to make up a chunk from smaller sizes. So a chunk can contain sub chunks of any size (keeping to power 2).
+
+So if the players screen size was 1440x900.
+The center chunk would need to be the same size or bigger.
+the Width of the players screen can be made up of 1024 and 512
+the Height of the players screen can be made up of two 512.
+
+This means will have four sub chunks:
+   1024x512  512x512
+   1024x512  512x512
+or a single 2048x1024 but that is bigger than the maximum size of 1024x1024.
+
+
+Would it be possible to create a chunk but not completely fill it in
+and fill it in bits at a time to prevent pauses in scrolling.
+Smaller updates and could have callbacks for when resources are loaded. A callback
+would result in the chunk being updated. Can background load the chunk and resource.
+
+Background loading is very important for making scrolling and moving within the map
+a smooth transition.
+
+First iteration of new approach
+===============================
+Do not worry about screen sizes > 800x600. So get it working for 800x600
+but do keep it in mind that bigger sizes will be needed later.
+
+Scrap the current grid system.
+
+What about inserting new chunks and deleting old chunks instead of re-using chunks which have already been created
+when the grid is being updated.
+
+The above would remove the extra complexity of computing which chunk can be re-used 
+for a update. It would be replaced with a simple insert of a new chunk and removal of the old.
+
+How inserting and removing of chunks would work
+==============================================
+If say, the map was scrolling to the right.
+
+ ____________________
+|      |      |      |
+|   1  |   2  |   3  |
+|______|______|______|
+|      |      |      |
+|  4   |   5  |   6  |
+|______|______|______|
+|      |      |      |
+|   7  |   8  |   9  |
+|______|______|______|
+
+
+Chunks which are currenly numbered 1, 4, and 7 would be the ones to be removed.
+The currently numbered 2, 3, 5, 6, 8, and 9 chunks would therefore be re-numbered to
+1, 2, 4, 5, 7, and 8. Three new chunks would then be inserted and then numbered
+3, 6 and 9.
+
+When rendering the chunks they would be rendered in number order.
+
+
+Queuing or immediate loading chunks
+==================================
+When map is scrolling. There can be a threshold for when a new chunk would
+need to be inserted. The chunk can be queued or immediately loading.
+
+Want to avoid the case of when chunks would be inserted then removed again shortly after
+as much as possible. Could remove and insert chunks incrementally.
+
+
+Incremental insert and removal of chunks
+=======================================
+Chunks would be removed and a new chunk inserted. New chunks would not be fully rendered
+and have all data loaded. Removed chunks would not have all resources released.
+
+This is an attempt to only load the minimal amount of resources when the player is 
+moving constantly between chunk boundaries.
+
+Another way might be to just keep the resources available for a short time
+after the chunk has been removed. The amount of time to keep them would need to be set
+from testing.
+
+
+Chunks could have a completion percentage
+========================================
+This would be where a chunk hasn't been fully rendered yet. 
+Could be waiting for resources to load.
+
+By implementing a completion percentage. The current state of the chunk
+would be known and how much was left before it has all been rendered.
+
+Can be used for profiling and checking of how chunks are being rendered.
+
+Screen size and Chunk size
+==========================
+The maximum size of a cached chunk's rendered texture would be 1024x1024.
+This is all fine along as the player's screen size is < 1024x1024.
+
+One way of solving would be to increase the amount of chunks. Therefore having
+multiple chunks showing on player's screen.
+
+Another option would be to detect the maximum texture size that the player's
+hardware supports and then adjust the availability of screen sizes and allow
+> 1024x1024 chunk sizes. Assuming that player's with large screen sizes would
+also have good enough hardware to support > 1024x1024 chunk sizes.
+
+Can also detect if the hardware supports non-power of 2 textures. Then can reduce chunk
+sizes in some cases. So a screen size of 800x600 can use 800x600 chunks instead of 1024x1024.
+
+So in conclusion, worst case for a player is that they will have to use a screen size of 
+800x600 or 1024x768. Other cases would be that they would be able to use higher resolutions
+and with support of non-power of 2 textures also save resources.
+
+Remember that implementation will be simpler if the chunk size is divisable by 32 (TILE_SIZE).
+
+Also player's that have hardware which only supports maximum of 1024x1024 textures could possibly
+struggle to render anything at a higher resolution than the maximum texture size.
+Therefore there could be little point in investing time to allow multiple textures to make up a chunk.
+
+Provide access to some hardware information. To allow the client to make informed decisions
+based on the player's hardware, allowing specific hardware optimization and changes.
+	- Maximum texture size supported
+	- Are non-power of 2 textures supported
+	
+	
+Tile set resource problem
+=========================
+When rendering the tile map and it is drawing a tile. If that tile's tile set is not loaded
+then the tile set is then loaded. This loading might not be immediately completed and
+therefore it would render the empty texture. 
+
+The rendering of the tile map may need to be more driven by when resources are loaded.
+So that when a resource has been loaded the chunk is then updated.
+
+Use more of a two step process.
+First load all of the resources needed by the chunk which has been inserted.
+Only once all the resources have been loaded should rendering of the chunk commence.
+
+Will need to know when the resources have finished loading.
+
+Could be problems if the player reaches a chunk that hasn't had all resources loaded yet.
+It would be very unlikely that the above would happen.
+
+Quick solution.
+When new chunk is inserted, gather all resources that will be needed. Put the names
+of the resources into a queue load.
+
+Have a function that takes from queue and loads the resource. Call this function
+every frame.
+
+Will still need to be able to load batch of resources when map is first loaded.
+So can render the starting 9 chunks.
+
+

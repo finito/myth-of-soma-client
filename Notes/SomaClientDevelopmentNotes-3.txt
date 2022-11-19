@@ -1,0 +1,51 @@
+RengerObject - > RenderEntities
+
+Zone keep an entity list?
+
+Add / Remove entity
+
+Sorting entity by Y position
+
+Sort when rendering or sort when Add
+- Could be multiple add for a single render
+  which would result in multiple sorts intead of single
+  sort.
+
+Where should entity list go?
+  - Does it really matter that much if it just goes in zone?
+    - Can move it elsewhere easily later.
+
+Entity list needs to be updated each frame
+
+Entities add themselves to the list?
+
+Some entity will always draw behind others
+such as Items on the map.
+
+MapObject replace render function with Update?
+
+
+MapEntities
+ - Load
+   - Group together the Shadow and Normal types
+   - Create new entity for each object
+     - Shadow + Normal
+     - HouseIn + HouseOut
+ - Update
+   - Updates the main list which contains other entities
+
+MapEntity
+ - AnimatedSprite
+   - Shadow
+   - Normal
+ - Render
+   - Shadow
+   - Normal
+ - Update
+   - Possibly
+   - Neater way to call update on the animated sprite.
+ - Alot of entity will share same AnimatedSprite
+   Resource cache should take care of this.
+
+
+

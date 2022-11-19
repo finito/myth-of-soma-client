@@ -1,0 +1,683 @@
+HUD Drag Container Code
+========================
+		_itemDragContainer =
+			static_cast<CEGUI::DragContainer*>(
+				CEGUI::WindowManager::getSingleton().createWindow("DragContainer", "HUD/ItemDragContainer"));
+		_itemDragContainer->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0, 0)));
+		_itemDragContainer->setSize(CEGUI::UVector2(CEGUI::UDim(1, 0), CEGUI::UDim(1, 0)));
+		_itemDragContainer->addChildWindow(_itemDragItem);
+		_itemDragContainer->setDragAlpha(1.0f);
+		_itemDragContainer->setProperty("MouseInputPropagationEnabled", "True");
+		_itemDragContainer->setDragDropTarget(false);
+		
+		_itemDragContainer->subscribeEvent(CEGUI::DragContainer::EventDragStarted,
+									   CEGUI::Event::Subscriber(&HUD::HandleItemDragStarted,
+									   this));
+		_itemDragContainer->subscribeEvent(CEGUI::DragContainer::EventMouseButtonUp,
+									   CEGUI::Event::Subscriber(&HUD::HandleItemDragMouseButtonUp,
+									   this));
+
+		_magicDragContainer =
+			static_cast<CEGUI::DragContainer*>(
+				CEGUI::WindowManager::getSingleton().createWindow("DragContainer", "HUD/MagicDragContainer"));
+		_magicDragContainer->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0, 0)));
+		_magicDragContainer->setSize(CEGUI::UVector2(CEGUI::UDim(1, 0), CEGUI::UDim(1, 0)));
+		_magicDragContainer->addChildWindow(_magicDragItem);
+		_magicDragContainer->setDragAlpha(1.0f);
+		_magicDragContainer->setProperty("MouseInputPropagationEnabled", "True");
+		_magicDragContainer->setDragDropTarget(false);
+		
+		_magicDragContainer->subscribeEvent(CEGUI::DragContainer::EventDragStarted,
+											CEGUI::Event::Subscriber(&HUD::HandleMagicDragStarted,
+											this));
+		_magicDragContainer->subscribeEvent(CEGUI::DragContainer::EventDragEnded,
+											CEGUI::Event::Subscriber(&HUD::HandleMagicDragEnded,
+											this));
+		_magicDragContainer->subscribeEvent(CEGUI::DragContainer::EventMouseButtonUp,
+											CEGUI::Event::Subscriber(&HUD::HandleMagicDragMouseButtonUp,
+											this));
+InventoryWindow DragContainer Code
+==================================			
+		_dragContainer =
+			static_cast<CEGUI::DragContainer*>(
+				CEGUI::WindowManager::getSingleton().createWindow("DragContainer", "Inventory/DragContainer"));
+		_dragContainer->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0, 0)));
+		_dragContainer->setSize(CEGUI::UVector2(CEGUI::UDim(1, 0), CEGUI::UDim(1, 0)));
+		_dragContainer->addChildWindow(_dragItem);
+		_dragContainer->setDragAlpha(1.0f);
+		_dragContainer->setProperty("MouseInputPropagationEnabled", "True");
+		_dragContainer->setDragDropTarget(false);
+
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragStarted,
+										   CEGUI::Event::Subscriber(&InventoryWindow::HandleDragStarted,
+										   this));
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragEnded,
+										   CEGUI::Event::Subscriber(&InventoryWindow::HandleDragEnded,
+										   this));
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventMouseButtonUp,
+										   CEGUI::Event::Subscriber(&InventoryWindow::HandleDragMouseButtonUp,
+										   this));
+MagicAbilityWindow DragContainer Code
+======================================
+		_dragContainer =
+			static_cast<CEGUI::DragContainer*>(
+				CEGUI::WindowManager::getSingleton().createWindow("DragContainer", "MagicAbility/DragContainer"));
+		_dragContainer->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0, 0)));
+		_dragContainer->setSize(CEGUI::UVector2(CEGUI::UDim(1, 0), CEGUI::UDim(1, 0)));
+		_dragContainer->addChildWindow(_dragItem);
+		_dragContainer->setDragAlpha(1.0f);
+		_dragContainer->setProperty("MouseInputPropagationEnabled", "True");
+		_dragContainer->setDragDropTarget(false);
+		_dragContainer->setUserString("Type", "Ability");
+
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragStarted,
+									   CEGUI::Event::Subscriber(&MagicAbilityWindow::HandleDragStarted,
+									   this));
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragEnded,
+									   CEGUI::Event::Subscriber(&MagicAbilityWindow::HandleDragEnded,
+									   this));
+									   
+MagicAuraWindow DragContainer Code
+===================================
+		_dragContainer =
+			static_cast<CEGUI::DragContainer*>(
+				CEGUI::WindowManager::getSingleton().createWindow("DragContainer", "MagicAura/DragContainer"));
+		_dragContainer->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0, 0)));
+		_dragContainer->setSize(CEGUI::UVector2(CEGUI::UDim(1, 0), CEGUI::UDim(1, 0)));
+		_dragContainer->addChildWindow(_dragItem);
+		_dragContainer->setDragAlpha(1.0f);
+		_dragContainer->setProperty("MouseInputPropagationEnabled", "True");
+		_dragContainer->setDragDropTarget(false);
+		_dragContainer->setUserString("Type", "SpecialAttack");
+
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragStarted,
+									   CEGUI::Event::Subscriber(&MagicAuraWindow::HandleDragStarted,
+									   this));
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragEnded,
+									   CEGUI::Event::Subscriber(&MagicAuraWindow::HandleDragEnded,
+									   this));
+									  
+MagicBlackWindow DragContainer Code
+===================================
+		_dragContainer =
+			static_cast<CEGUI::DragContainer*>(
+				CEGUI::WindowManager::getSingleton().createWindow("DragContainer", "MagicBlack/DragContainer"));
+		_dragContainer->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0, 0)));
+		_dragContainer->setSize(CEGUI::UVector2(CEGUI::UDim(1, 0), CEGUI::UDim(1, 0)));
+		_dragContainer->addChildWindow(_dragItem);
+		_dragContainer->setDragAlpha(1.0f);
+		_dragContainer->setProperty("MouseInputPropagationEnabled", "True");
+		_dragContainer->setDragDropTarget(false);
+		_dragContainer->setUserString("Type", "Magic");
+
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragStarted,
+									   CEGUI::Event::Subscriber(&MagicBlackWindow::HandleDragStarted,
+									   this));
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragEnded,
+									   CEGUI::Event::Subscriber(&MagicBlackWindow::HandleDragEnded,
+									   this));
+
+MagicBlueWindow DragContainer Code
+===================================
+		_dragContainer =
+			static_cast<CEGUI::DragContainer*>(
+				CEGUI::WindowManager::getSingleton().createWindow("DragContainer", "MagicBlue/DragContainer"));
+		_dragContainer->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0, 0)));
+		_dragContainer->setSize(CEGUI::UVector2(CEGUI::UDim(1, 0), CEGUI::UDim(1, 0)));
+		_dragContainer->addChildWindow(_dragItem);
+		_dragContainer->setDragAlpha(1.0f);
+		_dragContainer->setProperty("MouseInputPropagationEnabled", "True");
+		_dragContainer->setDragDropTarget(false);
+		_dragContainer->setUserString("Type", "Magic");
+
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragStarted,
+									   CEGUI::Event::Subscriber(&MagicBlueWindow::HandleDragStarted,
+									   this));
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragEnded,
+									   CEGUI::Event::Subscriber(&MagicBlueWindow::HandleDragEnded,
+									   this));
+
+MagicWhiteWindow DragContainer Code
+====================================
+		_dragContainer =
+			static_cast<CEGUI::DragContainer*>(
+				CEGUI::WindowManager::getSingleton().createWindow("DragContainer", "MagicWhite/DragContainer"));
+		_dragContainer->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0, 0)));
+		_dragContainer->setSize(CEGUI::UVector2(CEGUI::UDim(1, 0), CEGUI::UDim(1, 0)));
+		_dragContainer->addChildWindow(_dragItem);
+		_dragContainer->setDragAlpha(1.0f);
+		_dragContainer->setProperty("MouseInputPropagationEnabled", "True");
+		_dragContainer->setDragDropTarget(false);
+		_dragContainer->setUserString("Type", "Magic");
+
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragStarted,
+									   CEGUI::Event::Subscriber(&MagicWhiteWindow::HandleDragStarted,
+									   this));
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragEnded,
+									   CEGUI::Event::Subscriber(&MagicWhiteWindow::HandleDragEnded,
+									   this));
+
+RepairWindow DragContainer Code
+================================
+		_dragContainer =
+			static_cast<CEGUI::DragContainer*>(
+				CEGUI::WindowManager::getSingleton().createWindow("DragContainer", "Repair/DragContainer"));
+		_dragContainer->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0, 0)));
+		_dragContainer->setSize(CEGUI::UVector2(CEGUI::UDim(1, 0), CEGUI::UDim(1, 0)));
+		_dragContainer->addChildWindow(_dragItem);
+		_dragContainer->setDragAlpha(1.0f);
+		_dragContainer->setProperty("MouseInputPropagationEnabled", "True");
+		_dragContainer->setDragDropTarget(false);
+
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragStarted,
+										   CEGUI::Event::Subscriber(&RepairWindow::HandleDragStarted,
+										   this));
+		_dragContainer->subscribeEvent(CEGUI::DragContainer::EventDragEnded,
+										   CEGUI::Event::Subscriber(&RepairWindow::HandleDragEnded,
+										   this));
+										   
+HUD Code Annotations
+=====================
+bool HUD::HandleItemDragStarted(const CEGUI::EventArgs& e)
+{
+	if (_quickSlotUpdating)
+	{
+		// Prevent drag container being moved if waiting upon a update
+		// to be recieved for a quick slot.
+		_itemDragContainer->setDraggingEnabled(false);
+		return true;
+	}
+
+	HideItemTooltip();
+
+	if (_itemDragContainer->getUserData())	// Remove this
+	{ // Remove
+	
+		// Change below two lines to just
+		// 	const Item* item = static_cast<Item*>(_itemDragContainer->getUserData());
+		// Although could argue that the getUserData should never be a nullptr.
+		const Item& item =
+			*static_cast<Item*>(_itemDragContainer->getUserData());
+
+		// Change below line to
+		// if (item && !item->Empty())
+		if (!item.Empty())
+		{
+			// Below 5 lines are duplicated throughout code and should be in a function or something.
+			// Change item. to item->
+			const unsigned int iconGroup = ((item._pictureId - 1) / 81) + 1;
+			const unsigned int iconIndex = ((item._pictureId - 1) % 81) + 1;
+			const std::string imagePropertyString =
+				boost::str(boost::format("set:itemicons%1% image:%2%") % iconGroup % iconIndex);
+			_itemDragItem->setProperty("Image", imagePropertyString);
+
+			_itemDragContainer->setDraggingEnabled(true);
+			_itemDragItem->setAlpha(1.0f); // Surely there is a better way than to abuse Alpha to hide / show the drag item.
+		}
+		else
+		{
+			// No point allowing container to be dragged if nothing contained within it.
+			_itemDragContainer->setDraggingEnabled(false);
+		}
+	} // Remove
+
+	return true; // Event was handled.
+}
+
+void HUD::UpdateItemDragContainer(CEGUI::Window& window)
+{
+	// The item being dragged and the drag container is shared for all the slots
+	// therefore it needs to be placed as a child window for the slot the mouse is
+	// currently within.
+
+	// The alpha is set to 0 to avoid the image of the drag item
+	// being seen while not being dragged.
+	_itemDragItem->setAlpha(0.0f);
+	_itemDragContainer->setUserData(window.getUserData());
+	window.addChildWindow(_itemDragContainer);
+}
+
+bool HUD::HandleMouseEnterQuickSlotArea(const CEGUI::EventArgs& e)
+{
+	const CEGUI::MouseEventArgs mouseEventArgs =
+		static_cast<const CEGUI::MouseEventArgs&>(e);
+
+	if (mouseEventArgs.window->getUserData())
+	{
+		// Must not update the drag item or show item tooltip if a item is currently
+		// being dragged.
+		if (!_itemDragContainer->isBeingDragged())
+		{
+			// Change below two lines to just
+			// 	const Item* item = static_cast<Item*>(mouseEventArgs.window->getUserData());
+			// Although could argue that the getUserData should never be a nullptr, and below code asserts that.
+			const Item& item =
+				*static_cast<const Item*>(mouseEventArgs.window->getUserData());
+
+			if (!item.Empty())
+			{
+				ShowItemTooltip(*mouseEventArgs.window, item);
+			}
+			else
+			{
+				HideItemTooltip();
+			}
+
+			// Place the drag container within the slot the mouse is currently within.
+			// The drag item is hidden (SetAlpha(0)) and only shown when being dragged (SetAlpha(1))
+			UpdateItemDragContainer(*mouseEventArgs.window);
+		}
+	}
+
+	return true;
+}
+
+void HUD::UpdateMagicDragContainer(CEGUI::Window& window)
+{
+	// The item being dragged and the drag container is shared for all the slots
+	// therefore it needs to be placed as a child window for the slot the mouse is
+	// currently within.
+
+	// The alpha is set to 0 to avoid the image of the drag item
+	// being seen while not being dragged.
+	_magicDragContainer->setID(window.getID()); // What is this used for!! needs a comment.
+	_magicDragContainer->setUserData(window.getUserData());
+	_magicDragContainer->setUserString("Type", window.getUserString("Type"));
+	window.addChildWindow(_magicDragContainer);
+}
+
+bool HUD::HandleMagicDragStarted(const CEGUI::EventArgs& e)
+{
+	if (_magicDragContainer->getUserData())
+	{
+		CEGUI::String type = _magicDragContainer->getUserString("Type");
+		if (type.compare("Magic") == 0)
+		{
+			const MagicData& magic =
+				*static_cast<MagicData*>(_magicDragContainer->getUserData());
+		
+			_magicDragItem->setProperty("Image",
+				"set:magiciconsbig image:" + CEGUI::PropertyHelper::intToString(magic._id));
+
+			_magicDragItem->setAlpha(1.0f);
+		}
+		else if (type.compare("SpecialAttack") == 0)
+		{
+			const SpecialAttackData& specialAttack =
+				*static_cast<SpecialAttackData*>(_magicDragContainer->getUserData());
+		
+			_magicDragItem->setProperty("Image",
+				"set:specialattackiconsbig image:" + CEGUI::PropertyHelper::intToString(specialAttack._id));
+
+			_magicDragItem->setAlpha(1.0f);
+		}
+		else if (type.compare("Ability") == 0)
+		{
+			const AbilityData& ability =
+				*static_cast<AbilityData*>(_magicDragContainer->getUserData());
+
+			_magicDragItem->setProperty("Image",
+				"set:abilityiconsbig image:" + CEGUI::PropertyHelper::intToString(ability._id));
+
+			_magicDragItem->setAlpha(1.0f);
+		}
+	}
+
+	return true;
+}
+
+bool HUD::HandleMouseEnterMagicSlotArea(const CEGUI::EventArgs& e)
+{
+	const CEGUI::MouseEventArgs mouseEventArgs =
+		static_cast<const CEGUI::MouseEventArgs&>(e);
+
+	if (mouseEventArgs.window->getUserData())
+	{
+		// Must not update the drag item if a item is currently
+		// being dragged.
+		if (!_magicDragContainer->isBeingDragged())
+		{
+			UpdateMagicDragContainer(*mouseEventArgs.window);
+		}
+	}
+
+	return true;
+}
+
+Inventory Window Code Annotations
+==================================
+// The same logic as HUD::HandleMouseEnterQuickSlotArea
+bool InventoryWindow::HandleMouseEnterSlotArea(const CEGUI::EventArgs& e)
+{
+	const CEGUI::MouseEventArgs mouseEventArgs =
+		static_cast<const CEGUI::MouseEventArgs&>(e);
+
+	if (mouseEventArgs.window->getUserData())
+	{
+		// Must not update the drag item or show item tooltip if a item is currently
+		// being dragged. Because do not want any changes if the inventory is
+		// being scrolled.
+		if (!_dragContainer->isBeingDragged())
+		{
+			const Item& item =
+				*static_cast<const Item*>(mouseEventArgs.window->getUserData());
+
+			if (!item.Empty())
+			{
+				ShowItemTooltip(*mouseEventArgs.window, item);
+			}
+			else
+			{
+				HideItemTooltip();
+			}
+
+			UpdateDragContainer(*mouseEventArgs.window);
+		}
+	}
+	return true;
+}
+
+// The same logic as HUD::HandleItemDragStarted
+bool InventoryWindow::HandleDragStarted(const CEGUI::EventArgs& e)
+{
+	if (inventorySlotUpdating)
+	{
+		_dragContainer->setDraggingEnabled(false);
+		return true;
+	}
+
+	HideItemTooltip();
+
+	if (_dragContainer->getUserData())
+	{
+		const Item& item =
+			*static_cast<Item*>(_dragContainer->getUserData());
+
+		if (!item.Empty())
+		{
+			const unsigned int iconGroup = ((item._pictureId - 1) / 81) + 1;
+			const unsigned int iconIndex = ((item._pictureId - 1) % 81) + 1;
+			const std::string imagePropertyString =
+				boost::str(boost::format("set:itemicons%1% image:%2%") % iconGroup % iconIndex);
+			_dragItem->setProperty("Image", imagePropertyString);
+
+			_dragContainer->setDraggingEnabled(true);
+			_dragItem->setAlpha(1.0f);
+		}
+		else
+		{
+			_dragContainer->setDraggingEnabled(false);
+		}
+	}
+
+	return true;
+}
+
+// The same logic as HUD::UpdateItemDragContainer
+void InventoryWindow::UpdateDragContainer(CEGUI::Window& window)
+{
+	// The item being dragged and the drag container is shared for all the slots
+	// therefore it needs to be placed as a child window for the slot the mouse is
+	// currently within.
+
+	// The alpha is set to 0 to avoid the image of the drag item
+	// being seen while not being dragged.
+	_dragItem->setAlpha(0.0f);
+	_dragContainer->setUserData(window.getUserData());
+	window.addChildWindow(_dragContainer);
+}
+
+bool InventoryWindow::HandleThrowItemInputResult(const CEGUI::EventArgs& e)
+{
+	// I wonder if using boost::bind or std::tr1::bind would
+	// be able to pass howMany as a parameter to this function. 
+	// Although it wouldn't make any or much difference.
+	const unsigned int howMany =
+		CEGUI::PropertyHelper::stringToUint(Game::Instance()._inputBoxWindow->GetInputText());
+	if (howMany > 0)
+	{
+		// Would rather if it just used const Item* item
+		// and checked for nullptr. Would be more robust imo.
+		const Item& item =
+			*static_cast<const Item*>(_dragContainer->getUserData());
+
+		if (!item.Empty() && item._dura >= howMany)
+		{
+			SendThrowItem(item._index, howMany);
+		}
+		
+	}
+	return true;
+}
+
+MagicAbilityWindow Code Annotations
+===================================
+bool MagicAbilityWindow::HandleDragStarted(const CEGUI::EventArgs& e)
+{
+	if (_dragContainer->getUserData())
+	{
+		const AbilityData& ability =
+			*static_cast<AbilityData*>(_dragContainer->getUserData());
+		
+		if (ability._type == 1) // Needs a comment or a constant for the number 1 so that know what it is!
+		{
+			// Below code is also duplicated within HUD::HandleMagicDragStarted
+			_dragItem->setProperty("Image",
+				"set:abilityiconsbig image:" + CEGUI::PropertyHelper::intToString(ability._id));
+
+			_dragItem->setAlpha(1.0f);
+			_dragContainer->setDraggingEnabled(true);
+		}
+		else
+		{
+			_dragContainer->setDraggingEnabled(false);
+		}
+	}
+
+	return true;
+}
+
+// The same logic as HUD::HandleMouseEnterMagicSlotArea
+bool MagicAbilityWindow::HandleMouseEnterIconArea(const CEGUI::EventArgs& e)
+{
+	const CEGUI::MouseEventArgs mouseEventArgs =
+		static_cast<const CEGUI::MouseEventArgs&>(e);
+
+	if (mouseEventArgs.window->getUserData())
+	{
+		// Must not update the drag item if a icon is currently
+		// being dragged. Because do not want any changes if the list is
+		// being scrolled.
+		if (!_dragContainer->isBeingDragged())
+		{
+			// Below two lines are redundant!
+			const AbilityData& specialAttack =
+				*static_cast<const AbilityData*>(mouseEventArgs.window->getUserData());
+
+			UpdateDragContainer(*mouseEventArgs.window);
+		}
+	}
+
+	return true;
+}
+
+RepairWindow Code Annotations
+=============================
+// The same logic as HUD::HandleItemDragStarted and InventoryWindow::HandleDragStarted
+bool RepairWindow::HandleDragStarted(const CEGUI::EventArgs& e)
+{
+	if (_processing)
+	{
+		_dragContainer->setDraggingEnabled(false);
+		return true;
+	}
+
+	HideItemTooltip();
+
+	if (_dragContainer->getUserData())
+	{
+		const Item& item =
+			*static_cast<Item*>(_dragContainer->getUserData());
+
+		if (!item.Empty())
+		{
+			const unsigned int iconGroup = ((item._pictureId - 1) / 81) + 1;
+			const unsigned int iconIndex = ((item._pictureId - 1) % 81) + 1;
+			const std::string imagePropertyString =
+				boost::str(boost::format("set:itemicons%1% image:%2%") % iconGroup % iconIndex);
+			_dragItem->setProperty("Image", imagePropertyString);
+
+			_dragContainer->setDraggingEnabled(true);
+			_dragItem->setAlpha(1.0f);
+		}
+		else
+		{
+			_dragContainer->setDraggingEnabled(false);
+		}
+	}
+
+	return true;
+}
+
+// The same logic as HUD::UpdateItemDragContainer and InventoryWindow::UpdateDragContainer
+//  - Although setID is added here.
+//    - Can just get it through the parent of the _dragContainer because it is made a child of the window.
+void RepairWindow::UpdateDragContainer(CEGUI::Window& window)
+{
+	// The item being dragged and the drag container is shared for all the slots
+	// therefore it needs to be placed as a child window for the slot the mouse is
+	// currently within.
+
+	// The alpha is set to 0 to avoid the image of the drag item
+	// being seen while not being dragged.
+	_dragItem->setAlpha(0.0f);
+	_dragContainer->setID(window.getID());
+	_dragContainer->setUserData(window.getUserData());
+	window.addChildWindow(_dragContainer);
+}
+
+bool RepairWindow::HandleRepairDragDropItemDropped(const CEGUI::EventArgs& e)
+{
+    const CEGUI::DragDropEventArgs& dragDropArgs =
+        static_cast<const CEGUI::DragDropEventArgs&>(e);
+
+	if (dragDropArgs.dragDropItem == _dragContainer)
+	{
+		// Below line can be changed to
+		// if (dragDropArgs.dragDropItem->getParent() == _inventorySlots[dragDropArgs.dragDropItem->getParent()->getID()])
+		if (dragDropArgs.dragDropItem->getParent() == _inventorySlots[dragDropArgs.dragDropItem->getID()])
+		{
+			// Below line can be changed to
+			// UpdateRepairSlot(*_inventorySlots[dragDropArgs.dragDropItem->getID()]);
+			UpdateRepairSlot(*_inventorySlots[dragDropArgs.dragDropItem->getParent()->getID()]);
+			UpdateSlot(*_repairSlot);
+		}
+		// With above changes the setID within UpdateDragContainer is redundant.
+	}
+
+	return true;
+}
+
+void RepairWindow::UpdateSlot(CEGUI::Window& window)
+{
+	if (window.getUserData())
+	{
+		// Must not update the drag item or show item tooltip if a item is currently
+		// being dragged. Because do not want any changes if the inventory is
+		// being scrolled.
+		if (!_dragContainer->isBeingDragged())
+		{
+			const Item& item =
+				*static_cast<const Item*>(window.getUserData());
+
+			if (!item.Empty())
+			{
+				ShowItemTooltip(window, item);
+			}
+			else
+			{
+				HideItemTooltip();
+			}
+
+			UpdateDragContainer(window);
+		}
+	}
+}
+
+GUI Elements
+=============
+ItemSlotPane / SlotPane
+ - A pane containing item slots can be used for every place where inventory, warehouse, guild warehouse items are needed to be displayed.
+
+ItemSlot
+ - Derived from Slot
+   - Implements the item specific parts.
+     - Constructor that takes an item.
+	   - Sets the correct image.
+   - Could use Factory pattern instead or constructors for each specific slot type.
+ - A single item slot that can hold an item.
+ - Has a static DragContainer.
+   - Static because only need one that is shared for all ItemSlot.
+
+DragContainer
+ - An extension to CEGUI::DragContainer that implements defaults used by the client GUI.
+   - Saves having to repeat it all over the place.
+   
+Slot
+ - Base class for ItemSlot.
+   - Does not have to be a base class as could use the factory pattern or constructors for each specific slot type
+     - CreateItemSlot that creates a Slot and sets Slot attributes specific to an item.
+	 - Constructor taking Item as parameter or Magic etc.
+ - Implements generics of slot.
+ 
+ 
+ 
+Slot
+====
+namespace GUI
+{
+
+class Slot : private boost::noncopyable
+{
+public:
+	explicit Slot(CEGUI::Window& window);
+
+	void SetContents(const Item& item);
+	void SetContents(const MagicData& magic);
+	void SetContents(const SpecialAttackData& magic);
+	void SetContents(const AbilityData& magic);
+
+private:
+	CEGUI::Window& _window; // The window being used as the slot.
+};
+
+} // namespace GUI
+
+SlotPane
+========
+namespace GUI
+{
+
+class SlotPane : private boost::noncopyable
+{
+public:
+	explicit SlotPane(CEGUI::Window& window, CEGUI::Scrollbar& scrollBar);
+
+	void AddSlot(const Slot& slot);
+
+private:
+	CEGUI::Window& _window; // The window being used as the slot pane.
+	CEGUI::Scrollbar& _scrollBar;
+	std::vector<Slot*> _slots;
+};
+
+} // namespace GUI
+
+
+
+Shared enumerators
+==================
+Add a Common folder
+ - Add a header file for each Shared enumerator.
+   - GenderEnum.h
+   - DirectionEnum.h

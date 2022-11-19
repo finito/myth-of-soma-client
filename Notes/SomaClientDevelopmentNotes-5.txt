@@ -1,0 +1,105 @@
+Separate the engine part of the client into a separate project and make it a library that link to.
+ - Will need to make the engine part more generic.
+   - Allowing it for re-use in other projects.
+
+GUI events for inventory changed need grouping into single function there is alot of
+repeated code and they all need to be updated when another GUI screen is added
+that contains the inventory items.
+_engine->_gui.FireEvent("Inventory/Frame", GUI::InventoryWindow::EventInventoryChanged);
+_engine->_gui.FireEvent("Shop/Frame", GUI::ShopWindow::EventInventoryChanged);
+_engine->_gui.FireEvent("Repair/Frame", GUI::RepairWindow::EventInventoryChanged);
+_engine->_gui.FireEvent("Stash/Frame", GUI::StashWindow::EventInventoryChanged);
+
+
+PlayState::Initialize
+ - Split the content (GUI initializing into a SetupGUI function or w/e and SetupGraphics for textures n such) 
+  into functions so when looking at the Initialize function can see straight away what it is doing.
+
+PlayState::Cleanup
+ - Need to do the same thing as the Initialize and split things up.
+   - Although it seems all the code in there is for GUI so add a CleanupGUI function and throw it all in.
+
+Tidy up includes for all files.
+ - Use precompiled headers and put atleast all the C++ standard / Boost header files in there.
+ - Use preprocessor macro to be able to enable and disable the use of precompiled headers.
+   - See soma server extension source for an example.
+ - Add the folder in which the stdafx.h is in to the search path for includes of the project.
+   - Otherwise sub folders will fail to find it. (i think)
+
+PlayState constructor
+ - Why is GameEngine being passed as a pointer and not by reference?
+   - I think there is a reason but cannot remember why and there is no comment!
+
+PlayState::HandleNetwork
+ - Network needs to be put into a thread.
+   - Producer and consumer.
+
+PlayState Line 214 remove the extra // infront of comment.
+
+PlayState::HandleBattleModeChange
+ - Before casting to Character* would it be useful to check if the Entity type is a character?
+   - Also is static_cast correct?
+
+PlayState Line 1260 
+ - Not sure that i like the fact that new is used here and ownership is passed to the zone class.
+   - It needs to be even more explicit that there is transfer of ownership!
+     - Use a smart pointer?
+       - Or is that going ott?
+
+std::cout and std::cerr etc
+ - Is it not explicit enough that it is being redirected to files?
+
+PlayState Line 1362 the TODO about fine grained control for inventory update
+ - Is it possible for the events to have parameters easily?
+   - Then could have different update types that can be used together or separate etc. using bitwise or.
+
+Bug:Equip effect still happens when attempting to equip item when don't have requirements.
+
+
+Missing special text for items. E.g. Healing potion does not have line that says how much health it restores.
+
+Line spacing for npc selection is abit too big (font size also).
+
+Use the original item images the ones in the new client have had edges changed / blurred doesn't look right.
+
+Fix GamePacket and Session packet operator << overloads for character data.
+ - See https://github.com/LaurentGomila/SFML/issues/118 and https://github.com/LaurentGomila/SFML/issues/117
+
+Non-private members of class should not be prefixed with undeescore "_".
+
+Character::SetBattleMode add a override that takes BattleMode::Enum as parameter.
+ - Useful when want to set it when have a BattleMode::Enum and not just a unsigned char.
+
+Preload all the itemicons?
+ - Also currently they are loaded more than one.
+   - By the GUI and by Item object.
+
+Split up the Character object and possibly also other object into multiple components.
+ - See http://gameprogrammingpatterns.com/component.html
+ - Character would benefit alot as there is a ton of things that is only needed by the player.
+   - Having a graphics / render component means that could use that to render other characters
+     without the need to create a full character object.
+
+Language files.
+ - A simple key -> value for all text strings.
+
+GamePacket and SessionPacket
+ - Add a constructor that takes the id of packet?
+   - Make it explicit and then don't need to call the separate SetId function.
+
+Add SessionPacketQueue and GamePacketQueue?
+ - Queue of packets that hyave been received or are about to be sent.
+   - Separate thread, created by the socket?
+     - Game states can then push and pull using the packet queue object.
+
+Objects for each packet id?
+ - Would be alot but could make things more simple and code easier to read and maintain.
+
+GUI the code for dragging things around is duplicated alot!
+ - Implement a generic drag slot that can contain item, magic, special attack, crafting job, or anything else
+   that might want to drag around.
+
+GUI Inventory code is duplicated alot.
+ - Everyplace where the inventory is shown the code is duplicated e.g. RepairWindow, StashWindow, and ShopWindow.
+
+ItemTooltip needs SetSpecial and SetRepairEffect implementing.

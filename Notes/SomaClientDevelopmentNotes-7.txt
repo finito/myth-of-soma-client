@@ -1,0 +1,47 @@
+StaticEffectComponent
+ - EffectType
+ - Id
+ - Parent
+ - Filename
+
+DynamicEffectComponent
+ - EffectType
+ - Id
+ - Filename
+
+
+ParentComponent
+ - Parent Entity
+
+
+CastEffect(magicTable, parent);
+
+NormalEffect(magicTable, parent);
+
+FlyingEffect(magicTable, parent);
+
+ContinueEffect(magicTable, parent);
+
+
+PathComponent
+ - Queue
+ - Time
+ - Speed
+
+PathSystem
+ - Requires PathComponent and PositionComponent
+   - Advance through the route at the route speed pace.
+
+
+FlyingEffectComponent
+ - Source
+ - Target
+ - Filename
+ - hitPreEffect
+ - hitPostEffect
+
+FlyingEffectSystem
+ - added
+   - set the route from source position to target position.
+ - process
+   - advanced through the route.

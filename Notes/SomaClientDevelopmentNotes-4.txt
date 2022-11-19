@@ -1,0 +1,26 @@
+Separating the code into game and engine (basic not complex)
+- Moving things like Sprite, AnimatedSprite, generally anything to do with SFML
+- Ability to implement different renderer such as directx.
+  - Start off with a renderer which uses SFML
+    - Allowing to continue client development
+
+Things to put in it
+ - Audio
+- Resources
+- Graphics
+- Window
+- Input
+- Networking
+- Not sure about GUI might be best left within the game code
+
+
+Game States
+ - Login
+ - Character Selection
+ - Playing game
+
+Going from state to state
+  Login -> Character Selection -> Playing game
+
+  Playing game -> Login or Character Selection
+

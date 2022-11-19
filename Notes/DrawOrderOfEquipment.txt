@@ -1,0 +1,179 @@
+Direction
+	Down
+		if PadDrawOrder == 1 && ArmorDrawOrder >= 1 ##NO HELMET##
+			Body
+			Boots
+			Top
+			Pad
+			Shield
+			Weapon
+			#BREAK#
+		else #DEFAULT#
+			Body
+			Pad
+			Boots
+			Top
+			Helmet
+			Shield
+			Weapon
+		if PadDrawOrder == 1
+			Body
+			Top
+			Boots
+			Pad
+			Helmet
+			Shield
+			Weapon
+		if ArmorDrawOrder == 1
+			Body
+			Pad
+			Boots
+			Top
+			Helmet
+			Shield
+			Weapon
+		if ArmorDrawOrder == 2 or 3 ##Same as == 1 but Helmet is removed##
+			Body
+			Pad
+			Boots
+			Top
+			Shield
+			Weapon
+	Up
+		if PadDrawOrder == 1 && ArmorDrawOrder >= 1 ##NO HELMET##
+			Body
+			Boots
+			Top
+			Pad
+			Weapon
+			Shield
+			#BREAK#
+		else #DEFAULT#
+			Shield
+			Body
+			Pad
+			Boots
+			Top
+			Weapon
+			Helmet
+		if padDrawOrder == 1 ##Pad, Boots, and Top flipped, compared with DEFAULT##
+			Shield
+			Body
+			Top
+			Boots
+			Pad
+			Weapon
+			Helmet
+		if armorDrawOrder == 2 or 3 ##Same as DEFAULT but Helmet is removed##
+			Shield
+			Body
+			Pad
+			Boots
+			Top
+			Weapon
+	DownLeft/Left/UpLeft
+		if PadDrawOrder == 1 && ArmorDrawOrder >= 1 ##NO HELMET##
+			Body
+			Boots
+			Top
+			Pad
+			Weapon
+			Shield
+			#BREAK#
+		else #DEFAULT#
+			if ArmType == BOW
+				Body
+				Pad
+				Weapon
+				Boots
+				Top
+				Helmet
+				Shield
+			else	##Weapon before Boots and Top, compared with if ArmType == BOW##
+				Body
+				Weapon
+				Pad
+				Boots
+				Top
+				Helmet
+				Shield
+		if PadDrawOrder == 1 ## Helmet and Boots and Top switched.##
+			Body
+			Top
+			Boots
+			Pad
+			Weapon
+			Helmet
+			Shield
+		if ArmorDrawOrder == 1
+			if ArmType == BOW
+				Body
+				Pad
+				Weapon
+				Boots
+				Top
+				Helmet
+				Shield
+			else ##Weapon before Pad, compared with if ArmType == BOW##
+				Body
+				Weapon
+				Pad
+				Boots
+				Top
+				Helmet
+				Shield
+		if ArmorDrawOrder == 2 or 3
+			if ArmType == BOW ##Same as DEFAULT but Helmet is removed##
+				Body
+				Pad
+				Weapon
+				Boots
+				Top
+				Shield
+			else ##Weapon before Pad, compared with if ArmType == BOW##
+				Body ##Same as DEFAULT but Helmet is removed and Weapon before Pad, compared with if ArmType == BOW##
+				Weapon
+				Pad
+				Boots
+				Top
+				Shield
+	UpRight/Right/DownRight
+		if PadDrawOrder == 1 && ArmorDrawOrder >= 1 ##No Helmet##
+			Body
+			Boots
+			Top
+			Pad
+			Weapon
+			Shield
+			#BREAK#
+		else #DEFAULT
+			Body
+			Pad
+			Boots
+			Top
+			Helmet
+			Weapon
+			Shield
+		if PadDrawOrder == 1 ##Top before Boots and Pad.##
+			Body
+			Top
+			Boots
+			Pad
+			Helmet
+			Weapon
+			Shield
+		if ArmorDrawOrder == 1 ##Top after Boots and Pad.##
+			Body
+			Pad
+			Boots
+			Top
+			Helmet
+			Weapon
+			Shield
+		if ArmorDrawOrder == 2 or 3 #Same as if ArmorDrawOrder == 1 but no Helmet##
+			Body
+			Pad
+			Boots
+			Top
+			Weapon
+			Shield

@@ -1,0 +1,110 @@
+TileMap blue area for safe zones.
+
+Scaled down render of characters in party on left side.
+ - Can create entity that duplicates the character data.
+   - Then render the character spatial with a scale.
+     - Has to render above everything though...so means adding a new layer to the render system and being able to
+       render it at a specific point.
+
+Sound and Music
+ - Currently there is no sound or music playing at all.
+
+Inventory Window
+ - Physical and Magic attack / defense needs setting.
+
+Coloured Guild Names
+ - At GVW
+
+Prevent the opening of GUI window if another that should block it is open.
+ - e.g. Cannot open inventory and status window at same time.
+
+Offset the Camera and Chat window when a GUI window is open on the left side.
+
+Light changes due to night.
+
+Closing of open GUI window when pressing escape.
+
+Unloading of textures that are no longer being used.
+ - Could Remove after a time period of non-usage.
+   - Probably the easiest to implement.
+ - Could wait until there is only a single refernece left.
+
+Rendering of INV image files
+ - (DONE) Shown at character selection and on inventory window.
+ - Still need to add to Character Creation and Hair Shop when they are added.
+
+Guild War eliminated name colour
+ - Blacked out.
+
+Hair colours
+ - Currently not all of them are available and the client can show the wrong colour for hair.
+
+Custom tooltip
+ - So can use a static position and/or size.
+
+Item Focus and Pickup needs improvement
+ - The pickup needs moving out of the GUI.
+   - Item can be picked up even if not focused if the mouse click did not attack a character etc.
+
+Removal of WindowsLook scheme
+ - Make it so that only soma.scheme is required.
+   - Reduces GUI complexity.
+
+Bug:Noticed that there can be entity that are invisible
+ - Saw a bric on euro client that was not showing on new client and even attacking it did not show it.
+
+Town Teleport effect.
+
+Bug:Sometimes the character render at character selection is for the wrong character.
+
+Bug:Noticed that character entity can still move fast sometimes (teleports to a destination).
+
+Bug:Can see pk cursor when hover over player's character entity.
+
+==================================================================================================
+Low Priority
+============
+Character Focus
+ - Remove the hardcoded width and height values for guild emblem.
+
+MakeItem
+ - When result is received it also sends a count and have to reset the item dura.
+   - Its a waste and server could just set the item dura correctly when sending the data.
+==================================================================================================
+
+(DONE)Mouse Cursors
+ - Attack (Battle)
+ - Attack (PK)
+
+(DONE)Prevent movement when a GUI window that has input focus is open.
+
+(DONE)Rendering of Devil Soma images.
+ - (DONE)Item
+ - (DONE)Armature
+   - (DONE)Body
+
+(DONE)Focus System 
+ - Only focus one character at a time.
+   - The character at the front.
+
+(DONE)Stamina Regen.
+
+(DONE)Item tooltip
+ - (DONE)needs special text adding.
+ - (DONE)needs devil's item / human world's item text adding.
+
+(DONE)Mouse Cursor needs to stay when clicking and dragging away attacking a character.
+
+(FIXED)Shadows for objects disappear when at edge of map.
+
+(DONE)Characters do not play the attacked animation when hit.
+
+(DONE, fixed!)Bug:When attacking characters they sometimes pause for abit then move really fast to their destination.
+
+(FIXED)Bug:Can see end pre and post magic effects when players are inside houses.
+
+(FIXED)Bug:Cannot click to attack and holding down mouse button for attack is really slow.
+
+(FIXED)Bug:Can still see dragged item image after it asks how many of the item to throw away on inventory window.
+
+(FIXED)Bug:Chat messing up sometimes and not showing the correct lines.

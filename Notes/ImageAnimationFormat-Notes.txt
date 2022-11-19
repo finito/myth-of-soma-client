@@ -1,0 +1,83 @@
+Current IIF format 
+===============
+Image Count (Some original SPL will get split into multiple images because of using a maximum texture size of 1024x1024)
+List of Images == Image Count
+- Filename (Same as original SPL)
+- Frame Count (Within Image, can take from SPL)
+- Frames (Info can be taken from original SPL format)
+   - Top
+   - Left
+   - Right
+   - Bottom
+   - X position offset
+   - Y position offset
+- Animation Frame Count
+- List of Frames (Index to the frame) == Animation Frame Count
+   - Frame index is incremented starting from 0 for each image
+     so if there is 2 images both with 25 frames then frame index will be valid if it is from 0 to 49.
+- Speed (Frames/Sec)
+
+Current Issues with Format
+=======================
+- Does not support multiple directions
+  - Just need to add a number of directions
+    - Animations with single direction would just have value set to 1. When animation is used the direction 
+      would default to the first unless specified.
+
+- Armature that are images for items and also shadows currently have share animation with Man (Characters)
+  this makes perfect sense and so need a way to be able to allow the Armature images to share animation.
+  
+  Currently the animation is coupled with the image and therefore would need to duplicate animation data. 
+  This is not desirable.
+
+  A re-think of the format is needed.
+  - Ideas
+    - Split up the current format to two separate files, one file for image data and another for animation data.
+      Can then Load them both separately.
+      
+      Have separate animated sprites for each part that makes up a character.
+      Load the image data and animation data. What was the Armature files in old client would load the
+      same animation data as the Man files.
+
+      With resource management when loading the animation data for the Armature files. The animation
+      data could already be loaded and therefore it would just return that data instead of loading the same
+      data again. This takes care of the duplication issue.
+
+      This is quite flexible because if wanted to can have the Armature use a different animation file.
+
+   - Within code allow animation data to be copied from another image. Could be messy and complicate things
+     to much.
+
+
+New format 
+==========
+
+Dat File (Image and frame data)
+=========================
+Image Count (Some original SPL will get split into multiple images because of using a maximum texture size of 1024x1024)
+List of Images == Image Count
+- Filename (Same as original SPL)
+- Frame Count (Within Image, can take from SPL)
+- Frames (Info can be taken from original SPL format)
+   - Top
+   - Left
+   - Right
+   - Bottom
+   - X position offset
+   - Y position offset
+- Animation filename (Allow to link the image to an animation without having to do this within the code, easier to load)
+
+Ani File (Animation data)
+====================
+- Direction Count
+- Speed (Frames/Sec)
+- List of Animation per Direction == Direction Count
+   - Frame Count
+   - List of Frames (Index to the frame) == Animation Frame Count
+      - Frame index is incremented starting from 0 for each image
+        so if there is 2 images both with 25 frames then frame index will be valid if it is from 0 to 49.
+
+Notes:
+ - Will need to be able to store a list of animations with the index being the direction.
+   Animations with single direction could be abit of a waste but can live with it.
+ - Each direction has it's own speed

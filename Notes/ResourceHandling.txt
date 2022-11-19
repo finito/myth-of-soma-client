@@ -1,0 +1,199 @@
+Resource Types
+  - Textures in the form of sf::Image
+    - This might not work right because of loading .dat and .ani
+      would want to also not load the .dat or .ani more than once if it already is available.
+      Will probably need to alter the AnimatedSprite / Sprite classes to abstract the loading of .dat and .ani.
+      Make it so that they get attached to a AnimatedSprite / Sprite instead of internal loading.
+
+Load resource
+  - Will need a different loader depending on the type of resource that is being loaded
+    - 
+
+Unload resources no longer being used
+  - Use boost smart pointer
+    - Reference counted so that can know when there are no more references left
+      so therefore can remove the resource safely.
+
+ResourcePool
+ResourceLoader
+
+Limits for each type of resource
+then when a limit is reached remove the oldest (instead of just removing oldest and assuming
+that it is not used make sure that it removes the oldest last used resource)
+   - If no resource can be removed then there will be a problem
+     - could just force the oldest to be removed even tho it is beign used
+     - could just allow it then make sure one is removed later
+     - could just fail
+     - hopefully it never happens!
+       - not a good thing!
+
+Resources will need a base class that will keep a time of when it was last used
+will need to know the type of resource so that a limit can be applied.
+
+
+1920000
+1048576
+
+Implementing removing of resources after a period of time
+- each resource needs separate time value
+  - can be a single byte but easier to implement if it is set to GetTickCount
+
+
+Because the map uses a cache when rendering need to load the textures for tilesets
+in advance!
+
+When a full update of the map occurs
+Load all the resources needed for all the grid cells at once and immediately.
+
+After each update of the grid system
+build a queue of resources to load
+
+Should the .dat, .ani and .png(s) be treated as a single resource or not?
+ - the .dat could be a requirement for loading 
+ - the .ani could be a optional requirement for loading
+ - Resource would be loaded by its name without any extension.
+ - Resource loader process:
+   - Load .dat
+   - Load .png(s)
+   - Load .ani (if exists)
+ - Actually could have two resource types with two separate resource loaders
+   - AnimatedSprite
+   - Sprite (Not animated)
+ - Loading of .dat and .ani need to be separate so that a resource loader
+   for a sprite or animatedsprite can load and then give to the sprite/animatedsprite
+   to finish the loading.
+
+
+SpriteResourceLoader
+SpriteResourcePool
+
+
+class SpriteResourcePool
+{
+public:
+	typedef boost::shared_ptr<SpriteResource> ResourcePtr;
+	
+	ResourcePtr GetResource(const std::string& locator)
+	{
+		auto it = _resources.find(locator);
+		if (it == _resources.end())
+		{
+			ResourcePtr spriteResource = _resourceLoader.Load(locator);
+			it = _resources.insert(std::make_pair(locator)).first;
+		}
+		return it->second;
+	}
+	
+private:
+	typedef std::map<std::string, ResourcePtr> ResourceMap;
+	
+	ResourceMap _resources;
+	SpriteResourceLoader _resourceLoader;
+}
+
+class SpriteResourceLoader
+{
+public:
+	typedef boost::shared_ptr<SpriteResource> ResourcePtr;
+	
+	ResourcePtr Load(const std::string& name)
+	{
+		ResourcePtr spriteResource(new SpriteResource);
+		if (!spriteResource->Load)
+		{
+		
+		}
+	}
+
+private:
+	
+}
+
+class SpriteResource
+{
+public:
+	const FrameData& GetFrameData() const
+	{
+		return _frameData;
+	}
+
+private:
+	FrameData _frameData;
+}
+
+class AnimatedSpriteResource : public SpriteResource
+{
+public:
+	const Animation& GetAnimationData() const
+	{
+		return _animationData;
+	}
+
+private:
+	Animation _animationData;
+}
+
+AnimatedSpriteResourceLoader
+AnimatedSpriteResourcePool
+
+
+ImageResourcePool
+ImageResourceLoader
+
+SpriteAnimationDataResourcePool
+SpriteAnimationDataResourceLoader
+
+SpriteFrameDataResourcePool
+SpriteFrameDataResourceLoader
+
+
+// Implementation of the .dat format for Sprites
+// It maintains a sprite's frame and texture data.
+class SpriteFrameData
+{
+public:
+	bool LoadFromFile(const std::string& filename);
+
+	unsigned int GetFrameCount() const;
+
+	const SpriteFrame& GetFrame(unsigned int frameNo) const;
+
+private:
+	typedef std::vector<SpriteFrame> 	FrameArray;
+	typedef std::vector<sf::Image> 		TextureArray;
+
+	FrameArray 		_frames;
+	TextureArray	_textures;
+};
+
+class Sprite : public sf::Drawable
+{
+public:
+	// Creates a Sprite with source frame data
+	explicit Sprite(const SpriteFrameData& frameData,
+					const sf::Vector2f& position = sf::Vector2f(0, 0),
+					const sf::Vector2f& scale	 = sf::Vector2f(1, 1),
+					float rotation				 = 0.f,
+					const sf::Color& color		 = sf::Color(255, 255, 255, 255));
+
+	// Destructor
+	~Sprite();
+
+	// Set the frame data for the sprite
+	void SetFrameData(const SpriteFrameData& frameData);
+
+	// Set the current frame that will be rendered from the frame's image
+	void SetCurrentFrame(const unsigned int frameNo);
+
+	// Set the sub rect of a frame
+	void SetSubRect(const sf::IntRect& rect);
+
+	// Draw the object to the render target
+	virtual void Render(sf::RenderTarget& target,
+						sf::Renderer& renderer) const;
+
+private:
+	const SpriteFrameData*	_frameData;
+	unsigned int			_currentFrameNo;
+	sf::IntRect				_subRect;
+};

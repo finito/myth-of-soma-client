@@ -1,0 +1,73 @@
+Will be using PNG for images.
+	- Maximum sprite sheet size  will be 1024x1024
+		- To support wide range of GPUs
+
+Conversion will have to be done for all current images including the animation.
+
+Image Info File (IIF)
+ - Image amount
+ - List of Images
+	- 
+ - Frame amount
+ - List of Frames
+	- XPos
+	- YPos
+	- Width
+	- Height
+	- XOffset
+	- YOffset
+ - Animation amount
+ - List of Animation
+
+ANI
+ - Total Frames
+ - List of Frames
+	- Frame Size and Offsets within the connected image file.
+		- Connected image file can be done via file name of the image.
+ - Speed of animation
+	- Frames per second
+ - Multiple animations per image file?
+	- Might not be needed because directions will be in separate image files.
+
+Armature and Man SPL
+ - Convert to PNG
+ - Each direction of each animation state will be a separate sprite sheet
+	- Some can fit onto a single sprite sheet (All directions)
+ - Shadows (armature A6XXXX)
+	- Contrast + 30
+	- Add and Apply layer mask filled with black at 50% opacity
+
+BMP Tiles OBM
+ - Convert to PNG to the nearest power 2 keeping them in same order as the SPL frames.
+ - Some of them do not fit on a 1024x1024 texture
+	- Some how need to split up into multiple textures without modifying the TSD format
+		- Could be multiple files once texture has no more room on 1024x1024 it will create another
+			- The file which will hold the frame offsets will also have to include something to link
+			  multiple textures together.
+		- Could instead create textures based on the map itself blocks of 1024x1024 which make up
+		  the resulting map.
+			- This will take a longer time to develop
+				- Maybe could be a optimization if the other method of splitting them up into
+				  multiple textures does not work out well.
+			- Starting from top left of map and using the map TSD and TMN files make a large image
+			  of the map then split into 1024x1024 textures.
+				- To draw the map we can then draw a portion of the 1024x1024 texture and instead of
+				  having to use lots of textures to draw a portion of the map, it will instead only
+				  require a few textures (could be standing at the edge of textures).
+ 
+Map Object SPL
+ - Convert each object as separate PNG to nearest power 2
+	- This could end up being a problem that will take a while to solve in a good enough way
+	- Will not work good for animated.
+	- Map object format will need to be changed
+		- Could do the conversion within code.
+			- Replace the .ANI and .SPL with the new formats
+			- Makes it more complicated than it has to be
+		- Will need a converter from the current format to the new format.
+	- Lots and lots of files
+	- Some map objects are small and wouldn't make sense to split them up.
+	
+ - Shadows
+	- Brightness - 127
+	- Contrast + 56
+	- Add and Apply layer mask filled with black at 50% opacity
